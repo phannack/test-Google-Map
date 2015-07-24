@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+
+<!--
+  copyright (c) 2011 Google inc.
+
+  You are free to copy and use this sample.
+  License can be found here: http://code.google.com/apis/ajaxsearch/faq/#license
+-->
+
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+
+    <title>Google Maps JavaScript API v3 Example: Fusion Tables Layer</title>
+
+    <style>
+        body { font-family: Arial, sans-serif; }
+        #map_canvas { height: 600px; width:700px; }
+    </style>
+
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=visualization,places"></script>
+    <script type="text/javascript" id="script">
+        var map, info_window, layer_1, layer_2;
+        var tableid_1 = 359908;
+        var tableid_2 = 404027;
+        var zoom = 10;
+        var center = new google.maps.LatLng(16.3, 99.6);
+
+        function initialize() {
+            map = new google.maps.Map(document.getElementById('map_canvas'), {
+                center: center,
+                zoom: zoom,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+
+            info_window = new google.maps.InfoWindow();
+
+            layer_1 = new google.maps.FusionTablesLayer({
+                query: {
+                    select: 'geometry',
+                    from: tableid_1
+                },
+                map: map,
+                suppressInfoWindows: true
+            });
+            google.maps.event.addListener(layer_1, 'click', windowControl1);
+
+            layer_2 = new google.maps.FusionTablesLayer({
+                query: {
+                    select: "'Full Address'",
+                    from: tableid_2
+                },
+                map: map,
+                suppressInfoWindows: true
+            });
+            google.maps.event.addListener(layer_2, 'click', windowControl);
+
+
+            layerwell = new google.maps.visualization.MapsEngineLayer({
+                mapId: '12669838527252716668-17314554581637257924',
+                layerKey: 'layer_00010',
+                //clickable: true,
+                suppressInfoWindows: true,
+                zIndex:2,
+                map: map,
+            });
+
+
+
+            google.maps.event.addListener(layerwell, 'click',windowControlWell);
+
+
+
+
+
+        }
+
+        /*function windowControl(event) {
+            info_window.setOptions({
+                content: event.infoWindowHtml,
+                position: event.latLng,
+                pixelOffset: event.pixelOffset
+            });
+            info_window.open(map);
+        }*/
+        function windowControl1(event) {
+            info_window.setOptions({
+                content: "1",
+                position: event.latLng,
+                pixelOffset: event.pixelOffset
+            });
+            info_window.open(map);
+        }
+        function windowControl(event) {
+            info_window.setOptions({
+                content: "sss",
+                position: event.latLng,
+                pixelOffset: event.pixelOffset
+            });
+            info_window.open(map);
+        }
+        function windowControlWell(event) {
+            info_window.setOptions({
+                content: event.infoWindowHtml,
+                position: event.latLng,
+                pixelOffset: event.pixelOffset
+            });
+            info_window.open(map);
+        }
+    </script>
+</head>
+<body onload="initialize();">
+
+<div id="map_canvas"></div>
+
+<div id="code"></div>
+<script type="text/javascript" src="script/script.js"></script>
+</body>
+</html> 

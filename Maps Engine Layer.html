@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Maps Engine Layer</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+        html, body, #map-canvas {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=visualization"></script>
+    <script>
+        function initialize() {
+            var mapOptions = {
+                zoom: 14,
+                center: new google.maps.LatLng(59.322506, 18.010025)
+            };
+            info_window = new google.maps.InfoWindow();
+            var map = new google.maps.Map(document.getElementById('map-canvas'),
+                    mapOptions);
+
+            // See the page below for information on how to get the layerId.
+            // https://developers.google.com/maps/documentation/javascript/mapsenginelayers#the_layer_constructor
+            var mapsEngineLayer = new google.maps.visualization.MapsEngineLayer({
+                layerId: '06673056454046135537-08896501997766553811',
+                map: map,
+                suppressInfoWindows: true,
+            });
+            google.maps.event.addListener(mapsEngineLayer, 'click',windowControlWell);
+        }
+        google.maps.event.addDomListener(window, 'load', initialize);
+
+        function windowControlWell(event) {
+            info_window.setOptions({
+                content: event.infoWindowHtml,
+                position: event.latLng,
+                pixelOffset: event.pixelOffset
+            });
+            info_window.open(map);
+        }
+    </script>
+</head>
+<body>
+<div id="map-canvas"></div>
+</body>
+</html>
